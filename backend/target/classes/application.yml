@@ -1,0 +1,55 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: projectflow-backend
+
+  datasource:
+    # Default out-of-the-box zero config database: H2 file database in ./data/projectflowdb
+    url: jdbc:h2:file:./data/projectflowdb;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+    
+    # MySQL Production Configuration (Uncomment if using local MySQL server):
+    # url: jdbc:mysql://localhost:3306/projectflow?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    # driver-class-name: com.mysql.cj.jdbc.Driver
+    # username: root
+    # password: password
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    # For MySQL dialect, use: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+app:
+  jwt:
+    secret: ProjectFlowSuperSecretKeyThatIsAtLeast32BytesLongForSecurityRequirement123456
+    expiration-ms: 86400000 # 24 Hours in milliseconds
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+
+logging:
+  level:
+    root: INFO
+    com.projectflow: DEBUG
